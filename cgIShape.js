@@ -8,8 +8,39 @@ function makeCube (subdivisions)  {
     
     // fill in your code here.
     // delete the code below first.
-    addTriangle (-0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
-    addTriangle (-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5);
+
+    // multiply or divide each point based on subdivision amount
+    // make more triangles based on subdivision amount
+
+    // midpoints are where to subdivide
+
+    // subdivision 1 = 2 triangles per side
+    // subdivision 2 = 4 triangles per side
+
+    // side 1 // top
+    addTriangle (-0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5);
+    // bottom
+    addTriangle (-0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
+
+    // // side 2
+    // addTriangle (-0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
+    // addTriangle (-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5);
+
+    // // side 3
+    // addTriangle (-0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
+    // addTriangle (-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5);
+
+    // // side 4
+    // addTriangle (-0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
+    // addTriangle (-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5);
+
+    // // side 5
+    // addTriangle (-0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
+    // addTriangle (-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5);
+
+    // // side 6
+    // addTriangle (-0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
+    // addTriangle (-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5);
 }
 
 
