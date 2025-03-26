@@ -13,6 +13,7 @@ function makeCube(subdivisions) {
         for (let i = 0; i < 2 ** subdivisions; i++) {
             for (let j = 0; j < 2 ** subdivisions; j++) {
                 // Compute four corners of the square
+                const reverse = offset < 0;
                 let x1 = -half + i * squareWidth;
                 let y1 = -half + j * squareWidth;
                 let x2 = x1 + squareWidth;
@@ -25,8 +26,13 @@ function makeCube(subdivisions) {
                 let p4 = { [uAxis]: x2, [vAxis]: y2, [normal]: offset };
 
                 // Two triangles per square
-                addTriangle(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
-                addTriangle(p2.x, p2.y, p2.z, p4.x, p4.y, p4.z, p3.x, p3.y, p3.z);
+                if (reverse) {
+                    addTriangle(p1.x, p1.y, p1.z, p3.x, p3.y, p3.z, p2.x, p2.y, p2.z);
+                    addTriangle(p2.x, p2.y, p2.z, p3.x, p3.y, p3.z, p4.x, p4.y, p4.z);
+                } else {
+                    addTriangle(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
+                    addTriangle(p2.x, p2.y, p2.z, p4.x, p4.y, p4.z, p3.x, p3.y, p3.z);
+                }
             }
         }
     }
