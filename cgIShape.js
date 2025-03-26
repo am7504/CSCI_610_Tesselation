@@ -14,6 +14,7 @@ function makeCube(subdivisions) {
             for (let j = 0; j < 2 ** subdivisions; j++) {
                 // Compute four corners of the square
                 const reverse = offset < 0;
+                console.log(reverse);
                 let x1 = -half + i * squareWidth;
                 let y1 = -half + j * squareWidth;
                 let x2 = x1 + squareWidth;
