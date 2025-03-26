@@ -5,7 +5,7 @@
 //subdivisions
 //
 function makeCube(subdivisions) {
-    const squareWidth = 1 / (2 ** subdivisions); // Size of each small square
+    const squareWidth = 1 / (2 ** (subdivisions - 1)); // Size of each small square
     const half = 0.5; // Cube goes from -0.5 to 0.5
 
     function createFace(normal, uAxis, vAxis, offset) {
@@ -25,8 +25,8 @@ function makeCube(subdivisions) {
                 let p4 = { [uAxis]: x2, [vAxis]: y2, [normal]: offset };
 
                 // Two triangles per square
-                addTriangle(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
-                addTriangle(p2.x, p2.y, p2.z, p4.x, p4.y, p4.z, p3.x, p3.y, p3.z);
+                addTriangle(p1.x, p1.y, p1.z, p3.x, p3.y, p3.z, p2.x, p2.y, p2.z);
+                addTriangle(p2.x, p2.y, p2.z, p3.x, p3.y, p3.z, p4.x, p4.y, p4.z);
             }
         }
     }
