@@ -4,43 +4,41 @@
 // number of subdivisions along each cube face as given by the parameter
 //subdivisions
 //
-function makeCube (subdivisions)  {
-    
-    // fill in your code here.
-    // delete the code below first.
+function makeCube(subdivisions) {
+    const squareWidth = 1 / (2 ** subdivisions); // Size of each small square
+    const half = 0.5; // Cube goes from -0.5 to 0.5
 
-    // multiply or divide each point based on subdivision amount
-    // make more triangles based on subdivision amount
+    function createFace(normal, uAxis, vAxis, offset) {
+        for (let i = 0; i < 2 ** subdivisions; i++) {
+            for (let j = 0; j < 2 ** subdivisions; j++) {
+                // Compute four corners of the square
+                let x1 = -half + i * squareWidth;
+                let y1 = -half + j * squareWidth;
+                let x2 = x1 + squareWidth;
+                let y2 = y1 + squareWidth;
 
-    // midpoints are where to subdivide
+                // Convert to 3D positions
+                let p1 = { [uAxis]: x1, [vAxis]: y1, [normal]: offset };
+                let p2 = { [uAxis]: x2, [vAxis]: y1, [normal]: offset };
+                let p3 = { [uAxis]: x1, [vAxis]: y2, [normal]: offset };
+                let p4 = { [uAxis]: x2, [vAxis]: y2, [normal]: offset };
 
-    // subdivision 1 = 2 triangles per side
-    // subdivision 2 = 4 triangles per side
+                // Two triangles per square
+                addTriangle(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
+                addTriangle(p2.x, p2.y, p2.z, p4.x, p4.y, p4.z, p3.x, p3.y, p3.z);
+            }
+        }
+    }
 
-    // front
-    addTriangle (0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
-    addTriangle (-0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5);
-
-    // left side
-    addTriangle (-0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5);
-    addTriangle (-0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5);
-
-    // right side
-    addTriangle (0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5);
-    addTriangle (0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5);
-
-    // back
-    addTriangle (-0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5);
-    addTriangle (-0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5);
-
-    // top
-    addTriangle (-0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5);
-    addTriangle (0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5);
-
-    // bottom
-    addTriangle (-0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5);
-    addTriangle (0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5);
+    // Generate faces (normal axis, u-axis, v-axis, normal offset)
+    createFace("z", "x", "y", half);  // Front (+Z)
+    createFace("z", "x", "y", -half); // Back (-Z)
+    createFace("x", "z", "y", half);  // Right (+X)
+    createFace("x", "z", "y", -half); // Left (-X)
+    createFace("y", "x", "z", half);  // Top (+Y)
+    createFace("y", "x", "z", -half); // Bottom (-Y)
 }
+
 
 
 //
@@ -71,7 +69,7 @@ function makeCone (radialdivision, heightdivision) {
 // (centered at the origin) with number of slides (longitude) given by
 // slices and the number of stacks (lattitude) given by stacks.
 // For this function, you will implement the tessellation method based
-// on spherical coordinates as described in the video (as opposed to the
+// on spherical coor + paddingdinates as described in the video (as opposed to the
 //recursive subdivision method).
 //
 function makeSphere (slices, stacks) {
