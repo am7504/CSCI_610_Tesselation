@@ -5,40 +5,73 @@
 //subdivisions
 //
 function makeCube(subdivisions) {
-    const squareWidth = 1 / (2 ** (subdivisions - 1)); // Size of each small square
-    const half = 0.5; // Cube goes from -0.5 to 0.5
-
-    function createFace(normal, uAxis, vAxis, offset) {
-        console.log(subdivisions);
-        for (let i = 0; i < 2 ** subdivisions; i++) {
-            for (let j = 0; j < 2 ** subdivisions; j++) {
-                // Compute four corners of the square
-                let x1 = -half + i * squareWidth;
-                let y1 = -half + j * squareWidth;
-                let x2 = x1 + squareWidth;
-                let y2 = y1 + squareWidth;
-
-                // Convert to 3D positions
-                let p1 = { [uAxis]: x1, [vAxis]: y1, [normal]: offset };
-                let p2 = { [uAxis]: x2, [vAxis]: y1, [normal]: offset };
-                let p3 = { [uAxis]: x1, [vAxis]: y2, [normal]: offset };
-                let p4 = { [uAxis]: x2, [vAxis]: y2, [normal]: offset };
-
-                // Two triangles per square
-                addTriangle(p1.x, p1.y, p1.z, p3.x, p3.y, p3.z, p2.x, p2.y, p2.z);
-                addTriangle(p2.x, p2.y, p2.z, p3.x, p3.y, p3.z, p4.x, p4.y, p4.z);
-            }
+    // Each face is 1x1, and we want subdivisions+1 segments along an edge.
+    const segments = subdivisions + 1; 
+    const squareWidth = 1 / segments;  // Each square’s width
+    const half = 0.5;                // Face spans from -0.5 to 0.5
+  
+    // createFace builds one face using a grid.
+    // normal: the axis that is fixed (e.g., "z" for front/back)
+    // uAxis, vAxis: the two axes that define the face's plane
+    // offset: the fixed coordinate value for the normal axis (±half)
+    // flip: if true, reverse the winding order for proper outward normals.
+    function createFace(normal, uAxis, vAxis, offset, flip) {
+      for (let i = 0; i < segments; i++) {
+        for (let j = 0; j < segments; j++) {
+          // Compute the four corners of the current square.
+          let x1 = -half + i * squareWidth;
+          let y1 = -half + j * squareWidth;
+          let x2 = x1 + squareWidth;
+          let y2 = y1 + squareWidth;
+  
+          // Create points in 3D.
+          // Using computed property names, we map our 2D grid (x, y) into the proper axes.
+          let p1 = { [uAxis]: x1, [vAxis]: y1, [normal]: offset };
+          let p2 = { [uAxis]: x2, [vAxis]: y1, [normal]: offset };
+          let p3 = { [uAxis]: x1, [vAxis]: y2, [normal]: offset };
+          let p4 = { [uAxis]: x2, [vAxis]: y2, [normal]: offset };
+  
+          // For each square, add two triangles.
+          // If flip is true, swap the vertex order to reverse the winding.
+          if (flip) {
+            addTriangle(
+              p1[uAxis], p1[vAxis], p1[normal],
+              p3[uAxis], p3[vAxis], p3[normal],
+              p2[uAxis], p2[vAxis], p2[normal]
+            );
+            addTriangle(
+              p2[uAxis], p2[vAxis], p2[normal],
+              p3[uAxis], p3[vAxis], p3[normal],
+              p4[uAxis], p4[vAxis], p4[normal]
+            );
+          } else {
+            addTriangle(
+              p1[uAxis], p1[vAxis], p1[normal],
+              p2[uAxis], p2[vAxis], p2[normal],
+              p3[uAxis], p3[vAxis], p3[normal]
+            );
+            addTriangle(
+              p2[uAxis], p2[vAxis], p2[normal],
+              p4[uAxis], p4[vAxis], p4[normal],
+              p3[uAxis], p3[vAxis], p3[normal]
+            );
+          }
         }
+      }
     }
-
-    // Generate faces (normal axis, u-axis, v-axis, normal offset)
-    createFace("z", "x", "y", half);  // Front (+Z)
-    createFace("z", "x", "y", -half); // Back (-Z)
-    createFace("x", "z", "y", half);  // Right (+X)
-    createFace("x", "z", "y", -half); // Left (-X)
-    createFace("y", "x", "z", half);  // Top (-Y)
-    createFace("y", "x", "z", -half); // Bottom (+Y)
-}
+  
+    // Create each face.
+    // For a cube with outward facing normals following the right-hand rule,
+    // the front, right, and top faces use the default (non-flipped) winding,
+    // while the back, left, and bottom faces need to be flipped.
+    createFace("z", "x", "y", half, false);   // Front face (+Z)
+    createFace("z", "x", "y", -half, true);     // Back face (-Z)
+    createFace("x", "z", "y", half, false);     // Right face (+X)
+    createFace("x", "z", "y", -half, true);       // Left face (-X)
+    createFace("y", "x", "z", half, false);     // Top face (+Y)
+    createFace("y", "x", "z", -half, true);       // Bottom face (-Y)
+  }
+  
 
 
 
