@@ -9,6 +9,7 @@ function makeCube(subdivisions) {
     const half = 0.5; // Cube goes from -0.5 to 0.5
 
     function createFace(normal, uAxis, vAxis, offset) {
+        console.log(subdivisions);
         for (let i = 0; i < 2 ** subdivisions; i++) {
             for (let j = 0; j < 2 ** subdivisions; j++) {
                 // Compute four corners of the square
@@ -32,11 +33,11 @@ function makeCube(subdivisions) {
 
     // Generate faces (normal axis, u-axis, v-axis, normal offset)
     createFace("z", "x", "y", half);  // Front (+Z)
-    createFace("z", "x", "y", half); // Back (-Z)
+    createFace("z", "x", "y", -half); // Back (-Z)
     createFace("x", "z", "y", half);  // Right (+X)
-    createFace("x", "z", "y", half); // Left (-X)
+    createFace("x", "z", "y", -half); // Left (-X)
     createFace("y", "x", "z", half);  // Top (-Y)
-    createFace("y", "x", "z", half); // Bottom (+Y)
+    createFace("y", "x", "z", -half); // Bottom (+Y)
 }
 
 
