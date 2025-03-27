@@ -18,8 +18,8 @@
   var division1 = 3;
   var division2 = 1;
   var updateDisplay = true;
-  var anglesReset = [0.0, 0.0, 0.0];
-  var angles = [0.0, 0.0, 0.0];
+  var anglesReset = [30.0, 30.0, 0.0];
+  var angles = [0, 0, 0.0];
   var angleInc = 5.0;
   
   // Shapes we can draw
