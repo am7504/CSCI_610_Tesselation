@@ -42,8 +42,8 @@ function makeCube(subdivisions) {
     createFace("z", "y", "x", -half); // Back (-Z)
     createFace("x", "z", "y", half);  // Right (+X)
     createFace("x", "z", "y", -half); // Left (-X)
-    createFace("z", "x", "y", -half);  // Top (-Y)
-    createFace("z", "x", "y", half); // Bottom (+Y)
+    createFace("y", "x", "z", -half);  // Top (-Y)
+    createFace("y", "x", "z", half); // Bottom (+Y)
 }
 
 
