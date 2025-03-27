@@ -38,12 +38,12 @@ function makeCube(subdivisions) {
     }
 
     // Generate faces (normal axis, u-axis, v-axis, normal offset)
-    createFace("z", "x", "y", half);  // Front (+Z)
-    createFace("z", "x", "y", -half); // Back (-Z)
+    createFace("z", "x", "y", -half);  // Front (+Z)
+    createFace("z", "x", "y", half); // Back (-Z)
     createFace("x", "z", "y", half);  // Right (+X)
     createFace("x", "z", "y", -half); // Left (-X)
     createFace("y", "z", "x", half);  // Top (+Y)
-    createFace("y", "z", "x", half); // Bottom (-Y)
+    createFace("y", "z", "x", -half); // Bottom (-Y)
 }
 
 
